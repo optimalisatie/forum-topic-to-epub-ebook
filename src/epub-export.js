@@ -373,7 +373,6 @@ async function EPUB_EXPORT(config) {
   var first_page = location_url.replace(/\&start=\d+(\&|$)/i,'');
 
   epub_options.title = config.title || topic_title.innerHTML;
-  console.log(epub_options.title, 12244)
 
   var pages = [], pages_done = [], page_urls = [];
 
