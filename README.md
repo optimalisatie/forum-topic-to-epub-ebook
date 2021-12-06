@@ -9,7 +9,10 @@ Tested on:
 
 ## How to use
 
-Copy the following browser widget code into the browser console (F12).
+Step 1: navigate to a forum topic that you want to export, e.g. [https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848).
+
+
+Step 2: Copy the following browser widget code into the browser console (F12) to start an epub ebook export.
 
 ```javascript
 (function(b,c,a,d){
@@ -58,6 +61,8 @@ The primary options are:
    pages: [10,11,12,13,14,15]
 });
 ```
+
+![On the absurd hegemony of science - An ebook by [USERNAME]](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/example-ebook.png?raw=true)
 
 ### API
 
