@@ -71,7 +71,7 @@ javascript:[...the above widget code here...]
 
 ### API
 
-When an options object is passed as the second argument of the widget code, it will instantly start an ebook export for the active forum topic. Without it, the API `epubExport` can be used manually.
+Without passing an options object to the special browser widget code, the API `epubExport` can be used manually. It is also possible to load `epub.js` manually, for example for a custom forum integration.
 
 ```javascript
 window.epubExport({ /* options object */);
