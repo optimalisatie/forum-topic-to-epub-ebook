@@ -12,7 +12,7 @@ Tested on:
 Step 1: navigate to a forum topic that you want to export, e.g. [https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848).
 
 
-Step 2: Copy the following browser widget code into the browser console (F12) to start an epub ebook export.
+Step 2: Copy the following browser widget code into the browser console (F12) to start an `.epub` ebook export.
 
 ```javascript
 (function(b,c,a,d){
@@ -24,7 +24,7 @@ Step 2: Copy the following browser widget code into the browser console (F12) to
 
 #### Browser button
 
-It is possible to create a browser bookmark with the prefix `javascript:` to start the ebook export widget using a button in the browser.
+It is possible to create a browser bookmark button with the prefix `javascript:`. The button will create an ebook for the forum topic that is visible in the browser.
 
 ```text
 javascript:[...the above widget code here...]
