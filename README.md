@@ -7,7 +7,7 @@ Tested on:
 - [forums.onlinebookclub.org](https://forums.onlinebookclub.org/)
 - [onlinephilosophyclub.com](https://onlinephilosophyclub.com/forums/index.php)
 
-_(first version: only works on PHPBB forums)_
+_(first version for PHPBB forums)_
 
 ## How to use
 
