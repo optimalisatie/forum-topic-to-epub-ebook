@@ -32,8 +32,6 @@ javascript:[...the above widget code here...]
 
 ## Options
 
-The primary options are:
-
 - `proxy`: `string`
     A CORS proxy to enable remote images to be included in the book. ([free proxy list](https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347))
 - `pages`: `array`
@@ -50,6 +48,15 @@ The primary options are:
     Book description
 - `css`: `string` (optional)  
     CSS string, to include in book, e.g: `"body{background: #000}"`
+
+```json
+{
+	"proxy": "https://api.codetabs.com/v1/proxy/?quest={{url}}",
+	"cover": "https://onlinephilosophyclub.com/forums/download/file.php?avatar=39661_1389361593.jpg",
+	"pages": [14,15,16],
+	"title": "A selection of forum posts to read..."
+}
+```
 
 ### Example with options
 
