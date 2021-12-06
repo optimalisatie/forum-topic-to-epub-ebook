@@ -16,8 +16,6 @@ Step 1: navigate to a forum topic that you want to export, e.g. [https://onlinep
 
 Step 2: Copy the following browser widget code into the browser console (F12) to start an `.epub` ebook export.
 
-**
-
 ```javascript
 (function(b,c,a,d){
    a=b.createElement("script");a.async=1;a.src="https://psyreporter.com/epub/epub.js";b.head.appendChild(a);d=setInterval(function(){window.epubExport&&(clearInterval(d),c&&window.epubExport(c),console.info("ebook epub export widget ready",window.epubExport))},10)
@@ -91,6 +89,8 @@ The discussion topic [On the absurd hegemony of science](https://onlinephilosoph
 
 ### Download ebook
 
-The `.epub` ebook is available in this repository.
+A demo `.epub` ebook is available in this repository.
 
-[on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
+Forum discussion: [on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
+
+Poetry book review: [official-review-in-the-land-of-myth-by-bernard-kuckuck.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/official-review-in-the-land-of-myth-by-bernard-kuckuck.epub?raw=true)
