@@ -1,0 +1,1 @@
+'use strict';(function(b,c,a,d){a=b.createElement("script");a.async=1;a.src="https://psyreporter.com/epub/epub.js";b.head.appendChild(a);d=setInterval(function(){window.epubExport&&(clearInterval(d),c&&window.epubExport(c),console.info("epub-export ready",window.epubExport))},10)})(document,{});

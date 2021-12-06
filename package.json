@@ -1,0 +1,26 @@
+{
+  "name": "phpbb-epub-export",
+  "version": "1.0.0",
+  "description": "Export PHPBB forum topics to epub (ebook).",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "homepage": "https://style.tools/",
+    "copyright": "Copyright (C) 2019 Style.Tools",
+    "author": {
+        "name": "info@style.tools",
+        "email": "info@style.tools",
+        "web": "style.tools"
+    },
+  "license": "ISC",
+  "dependencies": {
+    "epub-gen-memory": "^1.0.9"
+  },
+  "devDependencies": {
+      "grunt": "latest",
+      "grunt-closure-compiler": "latest",
+      "grunt-contrib-copy": "latest",
+      "matchdep": "latest"
+  }
+}
