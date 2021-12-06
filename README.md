@@ -51,10 +51,10 @@ javascript:[...the above widget code here...]
 
 ```json
 {
-	"proxy": "https://api.codetabs.com/v1/proxy/?quest={{url}}",
-	"cover": "https://onlinephilosophyclub.com/forums/download/file.php?avatar=39661_1389361593.jpg",
-	"pages": [14,15,16],
-	"title": "A selection of forum posts to read..."
+   "proxy": "https://api.codetabs.com/v1/proxy/?quest={{url}}",
+   "cover": "https://onlinephilosophyclub.com/forums/download/file.php?avatar=39661_1389361593.jpg",
+   "pages": [14,15,16],
+   "title": "A selection of forum posts to read..."
 }
 ```
 
