@@ -1,6 +1,6 @@
 # Forum topic to epub 📖 ebook export
 
-A simple browser widget to export a forum topic to epub ebook.
+A simple browser widget to export a forum topic to `.epub` ebook.
 
 Tested on:
 
