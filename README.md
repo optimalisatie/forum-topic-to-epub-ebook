@@ -7,12 +7,16 @@ Tested on:
 - [forums.onlinebookclub.org](https://forums.onlinebookclub.org/)
 - [onlinephilosophyclub.com](https://onlinephilosophyclub.com/forums/index.php)
 
+_(first version: only works on PHPBB forums)_
+
 ## How to use
 
 Step 1: navigate to a forum topic that you want to export, e.g. [https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848).
 
 
 Step 2: Copy the following browser widget code into the browser console (F12) to start an `.epub` ebook export.
+
+**
 
 ```javascript
 (function(b,c,a,d){
