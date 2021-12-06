@@ -49,6 +49,8 @@ javascript:[...the above widget code here...]
 - `css`: `string` (optional)  
     CSS string, to include in book, e.g: `"body{background: #000}"`
 
+### Example options
+
 ```json
 {
    "proxy": "https://api.codetabs.com/v1/proxy/?quest={{url}}",
