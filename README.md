@@ -58,7 +58,7 @@ javascript:[...the above widget code here...]
 }
 ```
 
-### Example with options
+### Example browser widget with options
 
 ```javascript
 (function(b,c,a,d){
