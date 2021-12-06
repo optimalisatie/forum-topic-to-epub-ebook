@@ -51,7 +51,7 @@ The primary options are:
 - `css`: `string` (optional)  
     CSS string, to include in book, e.g: `"body{background: #000}"`
 
-### Example
+### Example with options
 
 ```javascript
 (function(b,c,a,d){
