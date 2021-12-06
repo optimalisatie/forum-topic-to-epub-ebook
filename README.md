@@ -70,7 +70,7 @@ When an options object is passed as the second argument of the widget code, it w
 window.epubExport({ /* options object */);
 ```
 
-# Ebook demo
+# 📖 Ebook demo
 
 The discussion topic [On the absurd hegemony of science](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848) with over 1000 posts was printed into an ebook in several seconds, including all images embedded.
 
