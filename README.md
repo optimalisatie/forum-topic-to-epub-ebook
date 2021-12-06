@@ -72,8 +72,12 @@ window.epubExport({ /* options object */);
 
 # Ebook demo
 
-The discussion topic [On the absurd hegemony of science](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848) with over 1000 pages was printed into an ebook in several seconds, including all images embedded.
+The discussion topic [On the absurd hegemony of science](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848) with over 1000 posts was printed into an ebook in several seconds, including all images embedded.
 
 ![On the absurd hegemony of science - An ebook by [USERNAME]](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/example-ebook.png?raw=true)
 
-Download ebook: [on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
+### Download ebook
+
+The `.epub` ebook is available in this repository.
+
+[on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
