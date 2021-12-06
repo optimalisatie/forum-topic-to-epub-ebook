@@ -62,6 +62,8 @@ The primary options are:
 });
 ```
 
+### Resulting ebook
+
 ![On the absurd hegemony of science - An ebook by [USERNAME]](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/example-ebook.png?raw=true)
 
 ### API
