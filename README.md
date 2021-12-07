@@ -38,7 +38,7 @@ javascript:[...the above widget code here...]
     An array of page indexes to export into the book, e.g. `[4,5,6]` for pages 4 to 6.
 - `cover`: `string`
     Book cover image URL, e.g. `"http://abc.com/book-cover.jpg"`
-- `images`: `boolean` (optional, default `true`)
+- `images`: `boolean` (optional, default `true`)  
     Embed external images in ebook 
 - `title`: `string`  
     Title of the book
@@ -48,7 +48,7 @@ javascript:[...the above widget code here...]
     Publisher name
 - `description`: `string` (optional)  
     Book description
-- `proxy`: `string`
+- `proxy`: `string`  
     A CORS proxy to enable remote images to be included in the book. ([free proxy list](https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347))
 - `css`: `string` (optional)  
     CSS string, to include in book, e.g: `"body{background: #000}"`
