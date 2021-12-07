@@ -52,7 +52,7 @@ javascript:[...the above widget code here...]
     A CORS proxy to enable remote images to be included in the book. ([free proxy list](https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347))
 - `css`: `string` (optional)  
     CSS string, to include in book, e.g: `"body{background: #000}"`
-- `print_sound`: `string | boolean` (optional, default `old-printer.wav`) 
+- `print_sound`: `string | boolean` (optional, default `old-printer.wav`)   
     A printer sound to play during ebook generation.
 
 ### Example options
