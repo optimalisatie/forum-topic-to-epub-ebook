@@ -3,6 +3,7 @@
 // url_escaped
 var default_cors_proxy = 'https://api.codetabs.com/v1/proxy/?quest={{url}}';
 var default_ebook_options = {
+  print_sound: 'https://psyreporter.com/epub/printer.wav',
   images: true,
   ignoreFailedDownloads: true,
   tocXHTML: `<?xml version="1.0" encoding="UTF-8"?>
@@ -496,7 +497,7 @@ async function EPUB_EXPORT(config) {
 
   var container = document.createElement('div');
   container.id = 'epub-container';
-  container.style.minHeight = '200px';
+  container.style.height = '200px';
   container.style.width = '1200px';
   container.style.maxWidth = '100%';
   container.style.margin = '0 auto';
@@ -506,10 +507,18 @@ async function EPUB_EXPORT(config) {
   container.style.flexDirection = 'column';
   container.style.marginTop = '2em';
   container.style.marginBottom = '2em';
+  container.style.overflow = 'hidden';
   
-  container.innerHTML = '<h1 style="padding: 0;margin: 0;">Exporting topic to <code>.epub</code>...</h1><div class="dom-nodes"></div>';
+  container.innerHTML = '<h1 style="padding: 0;margin: 0;"><span style="float:right;">🖨️</span>Printing topic to <code>.epub</code>...</h1><div class="dom-nodes"></div>';
   document.body.appendChild(container);
   var containerNodes = container.querySelector('.dom-nodes');
+
+  var audio;
+  if (epub_options.print_sound) {
+    audio = new Audio(epub_options.print_sound);
+    audio.loop = true;
+    audio.play();
+  }
 
   console.groupCollapsed('Loading pages...');
 
@@ -600,7 +609,14 @@ async function EPUB_EXPORT(config) {
     epub_options.page_selection = false;
   }
 
-  var page, _posts, count = 0;
+  var row = document.createElement('div');
+  row.style.borderBottom = 'dashed 1px black';
+  row.style.marginTop = '10px';
+  row.style.fontSize = '14px';
+  row.style.paddingBottom = '2px';
+  row.style.color = 'black';
+
+  var page, _posts, count = 0, _row;
   while (page = pages.shift()) {
 
     if (page_selection && page_selection.indexOf(count + 1) === -1) {
@@ -610,8 +626,14 @@ async function EPUB_EXPORT(config) {
     count++;
 
     console.info('parsing page...', page[0]);
+
+    _row = row.cloneNode(true);
+    _row.innerHTML = 'Parsing ' + page[0];
+    containerNodes.appendChild(_row);
     
     _posts = QUERY_POSTS(page[1], proxy, epub_options.images);
+
+    _row.parentNode.removeChild(_row);
 
     posts = posts.concat(_posts);
   }
@@ -626,6 +648,11 @@ async function EPUB_EXPORT(config) {
 
   new epubGen.default(epub_options, posts).then(
     function(content) {
+
+      if (audio) {
+        audio.pause();
+      }
+
       console.log('epub ebook generated', slug + '.epub', content);
 
         /*var blob = new Blob([content], {
