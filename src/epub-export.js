@@ -225,7 +225,7 @@ function ERROR(err, alert_msg) {
 }
 
 var IFRAMES = [];
-async function LOAD_PAGE(url) {
+async function LOAD_PAGE(url, containerNodes) {
   return await new Promise(async function(resolve,reject) {
 
     var html;
@@ -244,10 +244,11 @@ async function LOAD_PAGE(url) {
     iframe.setAttribute('class', 'epub-frame');
     iframe.style.width = '100%';
     iframe.style.height = '20px';
+    iframe.style.borderBottom = 'dashed 2px #000';
 
     IFRAMES[IFRAME_ID] = iframe;
 
-    document.body.appendChild(iframe);
+    containerNodes.appendChild(iframe);
 
     var d = (iframe.contentDocument) ? iframe.contentDocument : ((iframe.contentWindow) ? iframe.contentWindow.document : false);
     d.open();
@@ -426,7 +427,7 @@ function QUERY_POSTS(dom, proxy, images) {
   return posts;
 }
 
-function PAGINATION_LINKS(dom, pages, page_urls) {
+function PAGINATION_LINKS(dom, pages, page_urls, containerNodes) {
   var todo = [];
   var ul = dom.querySelector('.pagination ul');
   if (ul) {
@@ -437,7 +438,7 @@ function PAGINATION_LINKS(dom, pages, page_urls) {
 
         todo.push(
           new Promise(async function(resolve, reject) {
-            var dom = await LOAD_PAGE(href);
+            var dom = await LOAD_PAGE(href, containerNodes);
             pages.push([
               href,
               dom
@@ -493,10 +494,27 @@ async function EPUB_EXPORT(config) {
 
   var pages = [], pages_done = [], page_urls = [];
 
+  var container = document.createElement('div');
+  container.id = 'epub-container';
+  container.style.minHeight = '200px';
+  container.style.width = '1200px';
+  container.style.maxWidth = '100%';
+  container.style.margin = '0 auto';
+  container.style.border = 'dashed 10px black';
+  container.style.padding = '2em';
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
+  container.style.marginTop = '2em';
+  container.style.marginBottom = '2em';
+  
+  container.innerHTML = '<h1 style="padding: 0;margin: 0;">Exporting topic to <code>.epub</code>...</h1><div class="dom-nodes"></div>';
+  document.body.appendChild(container);
+  var containerNodes = container.querySelector('.dom-nodes');
+
   console.groupCollapsed('Loading pages...');
 
   // parse pagination links
-  var todo = PAGINATION_LINKS(document, pages, page_urls);
+  var todo = PAGINATION_LINKS(document, pages, page_urls, containerNodes);
 
   if (todo.length) {
     await Promise.all(todo);
@@ -505,7 +523,7 @@ async function EPUB_EXPORT(config) {
   // load first page dom
   var dom;
   if (page_urls.indexOf(first_page) === -1) { 
-    dom = await LOAD_PAGE(first_page);
+    dom = await LOAD_PAGE(first_page, containerNodes);
     pages.push([
       first_page,
       dom
@@ -527,7 +545,7 @@ async function EPUB_EXPORT(config) {
     pages.forEach(function(page) {
 
       // parse pagination links
-      var _todo = PAGINATION_LINKS(page[1], pages, page_urls);
+      var _todo = PAGINATION_LINKS(page[1], pages, page_urls, containerNodes);
       todo = todo.concat(_todo);
     });
 
@@ -620,6 +638,8 @@ async function EPUB_EXPORT(config) {
         document.querySelectorAll('.epub-frame').forEach(function(f) {
           f.parentNode.removeChild(f);
         });
+
+        container.parentNode.removeChild(container);
 
     },
     function(err){
