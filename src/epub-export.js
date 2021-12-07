@@ -512,6 +512,7 @@ async function EPUB_EXPORT(config) {
   container.innerHTML = '<h1 style="padding: 0;margin: 0;"><span style="float:right;">🖨️</span>Printing topic to <code>.epub</code>...</h1><div class="dom-nodes"></div>';
   document.body.appendChild(container);
   var containerNodes = container.querySelector('.dom-nodes');
+  container.scrollIntoView();
 
   var audio;
   if (epub_options.print_sound) {
@@ -609,12 +610,8 @@ async function EPUB_EXPORT(config) {
     epub_options.page_selection = false;
   }
 
-  var row = document.createElement('div');
-  row.style.borderBottom = 'dashed 1px black';
-  row.style.marginTop = '10px';
-  row.style.fontSize = '14px';
-  row.style.paddingBottom = '2px';
-  row.style.color = 'black';
+  var row = document.createElement('span');
+  row.innerHTML = '<span style="font-size:40px;line-height:44px;margin-top:10px;display:inline-block;">📄&nbsp;</span>';
 
   var page, _posts, count = 0, _row;
   while (page = pages.shift()) {
@@ -626,14 +623,9 @@ async function EPUB_EXPORT(config) {
     count++;
 
     console.info('parsing page...', page[0]);
-
-    _row = row.cloneNode(true);
-    _row.innerHTML = 'Parsing ' + page[0];
-    containerNodes.appendChild(_row);
+    containerNodes.appendChild(row.cloneNode(true));
     
     _posts = QUERY_POSTS(page[1], proxy, epub_options.images);
-
-    _row.parentNode.removeChild(_row);
 
     posts = posts.concat(_posts);
   }
@@ -643,6 +635,15 @@ async function EPUB_EXPORT(config) {
   }
 
   var slug = epub_options.title.toLowerCase().replace(/[^a-z0-9\_\-]+/ig,'-').replace(/^-+/g,'').replace(/-+$/g,'').trim();
+
+  row = document.createElement('div');
+  row.style.fontSize = '40px';
+  row.style.lineHeight = '44px';
+  row.style.marginTop = '10px';
+  row.style.display = 'inline-block';
+  row.style.marginTop = '20px;'
+  row.innerHTML = '📠';
+  containerNodes.appendChild(row);
 
   console.info('generating ebook...', slug + '.epub');
 
