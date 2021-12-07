@@ -376,49 +376,42 @@ function QUERY_POSTS(dom, proxy, images) {
     content.querySelectorAll('[src]').forEach(function(el) {
       el.src = PARSE_URL(el.src);
     });
-    if (proxy || !images) {
-      var removedImage, removedSmily;
-      if (!images) {
-        removedImage = dom.createElement('a');
+    
+    var removedImage = dom.createElement('a');
         removedImage.setAttribute('class', 'img-removed');
         removedImage.innerHTML = 'Image removed';
 
-        removedSmily = dom.createElement('span');
-        removedImage.setAttribute('class', 'img-removed');
-        removedImage.innerHTML = 'Image removed';
-      }
-      content.querySelectorAll('img').forEach(function(el) {
-        if (!images) {
+    content.querySelectorAll('img').forEach(function(el) {
 
-          if (el.classList.contains('emoji') && el.getAttribute('alt')) {
-            el.parentNode.replaceChild(dom.createTextNode(el.getAttribute('alt')), el);
-          } else {
+      // replace smilies with unicode character
+      if (el.classList.contains('emoji') && el.getAttribute('alt')) {
+        el.parentNode.replaceChild(dom.createTextNode(el.getAttribute('alt')), el);
+      } else if (!images) {
 
-            var rmi = removedImage.cloneNode(true);
-            rmi.setAttribute('href', el.src);
+        var rmi = removedImage.cloneNode(true);
+        rmi.setAttribute('href', el.src);
 
-            if (el.classList.contains('emoji')) {
-              rmi.classList.add('emoji');
-            }
-            if (el.classList.contains('smilies')) {
-              rmi.classList.add('smilies');
-            }
-
-            var w = el.width, 
-                h = el.height;
-            if (w && !isNaN(w)) {
-              rmi.style.width = w + 'px';
-            }
-            if (h && !isNaN(h)) {
-              rmi.style.height = h + 'px';
-            }
-            el.parentNode.replaceChild(rmi, el);
-          }
-        } else if (proxy) {
-          el.src = PROXY(el.src, proxy);
+        if (el.classList.contains('emoji')) {
+          rmi.classList.add('emoji');
         }
-      });
-    }
+        if (el.classList.contains('smilies')) {
+          rmi.classList.add('smilies');
+        }
+
+        var w = el.width, 
+            h = el.height;
+        if (w && !isNaN(w)) {
+          rmi.style.width = w + 'px';
+        }
+        if (h && !isNaN(h)) {
+          rmi.style.height = h + 'px';
+        }
+        el.parentNode.replaceChild(rmi, el);
+
+      } else if (proxy) {
+        el.src = PROXY(el.src, proxy);
+      }
+    });
 
     post.content = content.innerHTML;
 
