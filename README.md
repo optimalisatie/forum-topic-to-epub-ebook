@@ -34,12 +34,12 @@ javascript:[...the above widget code here...]
 
 ## Options
 
-- `proxy`: `string`
-    A CORS proxy to enable remote images to be included in the book. ([free proxy list](https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347))
 - `pages`: `array`
     An array of page indexes to export into the book, e.g. `[4,5,6]` for pages 4 to 6.
 - `cover`: `string`
     Book cover image URL, e.g. `"http://abc.com/book-cover.jpg"`
+- `images`: `boolean` (optional, default `true`)
+    Embed external images in ebook 
 - `title`: `string`  
     Title of the book
 - `author`: `string | string[]` (optional, default `['anonymous']`)  
@@ -48,6 +48,8 @@ javascript:[...the above widget code here...]
     Publisher name
 - `description`: `string` (optional)  
     Book description
+- `proxy`: `string`
+    A CORS proxy to enable remote images to be included in the book. ([free proxy list](https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347))
 - `css`: `string` (optional)  
     CSS string, to include in book, e.g: `"body{background: #000}"`
 
@@ -58,6 +60,8 @@ javascript:[...the above widget code here...]
    "proxy": "https://api.codetabs.com/v1/proxy/?quest={{url}}",
    "cover": "https://onlinephilosophyclub.com/forums/download/file.php?avatar=39661_1389361593.jpg",
    "pages": [14,15,16],
+   "images": true,
+   "ignoreFailedDownloads": true,
    "title": "A selection of forum posts to read..."
 }
 ```

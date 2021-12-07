@@ -1,23 +1,10 @@
-/*
-blockquote {
-    background-color: #EBEADD;
-    border-color: #DBDBCE;
-    border: 1px solid transparent;
-    font-size: 0.95em;
-    margin: 1em 1px 1em 25px;
-    overflow: hidden;
-    padding: 5px;
-}
-blockquote blockquote {
-    background-color: #EFEED9;
-    font-size: 1em;
-    margin: 1em 1px 1em 15px;
-}
-*/
+
 // url
 // url_escaped
 var default_cors_proxy = 'https://api.codetabs.com/v1/proxy/?quest={{url}}';
 var default_ebook_options = {
+  images: true,
+  ignoreFailedDownloads: true,
   tocXHTML: `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="<%- lang %>" lang="<%- lang %>">
@@ -83,8 +70,35 @@ chapterXHTML: `<?xml version="1.0" encoding="UTF-8"?>
 </body>
 </html>`,
   css: `
+
+  a.img-removed {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid black;
+    background: linear-gradient(to top left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) calc(50% - 0.8px), rgba(0, 0, 0, 0.5) 50%, rgba(0,0,0,0) calc(50% + 0.8px), rgba(0,0,0,0) 100%), linear-gradient(to top right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) calc(50% - 0.8px), rgba(0, 0, 0, 0.5) 50%, rgba(0,0,0,0) calc(50% + 0.8px), rgba(0,0,0,0) 100%);
+    background-color: #f7f7f7;
+    text-overflow: ellipsis;
+    font-weight:normal;
+    font-size: 1em;
+    justify-content: center;
+    overflow:hidden;
+    max-width:100%;
+    max-height:100%;
+    color:#000;
+        white-space: nowrap;
+  }
+  .emoji {
+    min-height: 18px;
+    min-width: 18px;
+    height: 1em;
+    width: 1em;
+  }
+  .smilies {
+    vertical-align: text-bottom;
+  }
   ol {
-    padding-inline-start:3em;
+    padding-inline-start:3.5em;
   }
 .epub-author {
     margin: 0;
@@ -214,20 +228,6 @@ var IFRAMES = [];
 async function LOAD_PAGE(url) {
   return await new Promise(async function(resolve,reject) {
 
-    var IFRAME_ID = IFRAMES.length;
-    var iframe = document.createElement('iframe');
-    iframe.name = 'epub-frame-' + IFRAME_ID;
-    iframe.id = 'epub-frame-' + IFRAME_ID;
-
-    IFRAMES[IFRAME_ID - 1] = iframe;
-
-    document.body.appendChild(iframe);
-
-    var d = (iframe.contentWindow || iframe.contentDocument);
-    if (d.document) {
-        d = d.document;
-    }
-
     var html;
     try {
       var response = await fetch(url);
@@ -236,6 +236,22 @@ async function LOAD_PAGE(url) {
       return ERROR(err);
     }
 
+    var IFRAME_ID = IFRAMES.length;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'about:blank';
+    iframe.name = 'epub-frame-' + IFRAME_ID;
+    iframe.id = 'epub-frame-' + IFRAME_ID;
+    iframe.setAttribute('class', 'epub-frame');
+    iframe.style.width = '100%';
+    iframe.style.height = '20px';
+
+    IFRAMES[IFRAME_ID] = iframe;
+
+    document.body.appendChild(iframe);
+
+    var d = (iframe.contentDocument) ? iframe.contentDocument : ((iframe.contentWindow) ? iframe.contentWindow.document : false);
+    d.open();
+
     // content security policy
     var csp = {}, meta = '';
 
@@ -243,6 +259,7 @@ async function LOAD_PAGE(url) {
     csp['script-src'] = " 'none'";
     csp['style-src'] = " 'none'";
     csp['frame-src'] = " 'none'";
+    csp['img-src'] = " * data:";
 
     // construct meta
     meta = '<meta http-equiv=Content-Security-Policy content="';
@@ -253,13 +270,75 @@ async function LOAD_PAGE(url) {
     }
     meta += '">';
 
-    // execute code
-    d.open();
     d.write(html.replace(/<head(\s[^>]*|\/)?>/i,'$1' + meta));
     d.close();
 
+    // tmp
+    iframe.scrollIntoView();
+
+    // preload images
+    var images = d.querySelectorAll('.postimage,.emoji');
+    if (images.length) {
+      images = [].slice.call(images, 0);
+      var image;
+      while (image = images.shift()) {
+        await new Promise(function(_resolve,_reject) {
+
+          if (image.classList.contains('emoji')) {
+            image.style.minHeight = '18px';
+            image.style.minWidth = '18px';
+            image.style.height = '1em';
+            image.style.width = '1em';
+            _resolve();
+          } else if (image.complete && image.width) {
+            _resolve();
+          } else {
+
+            image.scrollIntoView();
+
+            if (image.complete && image.width) {
+              _resolve();
+            } else {
+
+              var resolved;
+              image.onload = function() {
+                if (image && image.complete && image.width) {
+                  if (int) {
+                    clearInterval(int);
+                  }
+                  if (!resolved) {
+                    resolved = true;
+                    _resolve();
+                  }
+                }
+              }
+
+              var count = 0;
+              var int = setInterval(function() {
+                count++;
+                if (count > 20) {
+                  clearInterval(int);
+                  return;
+                }
+                if (image && image.complete && image.width) {
+                  clearInterval(int);
+                  if (!resolved) {
+                    resolved = true;
+                    _resolve();
+                  }
+                }
+              },100);
+            }
+          }
+        });
+      }
+    }
+
     setTimeout(function() {
       resolve(d);
+
+      // hide iframe
+      iframe.style.display='none';
     },500);
 
   });
@@ -272,7 +351,7 @@ function PARSE_URL(url) {
   return link.href;
 }
 
-function QUERY_POSTS(dom, proxy) {
+function QUERY_POSTS(dom, proxy, images) {
 
   var posts = [];
   var els = dom.querySelectorAll('.post');
@@ -295,9 +374,47 @@ function QUERY_POSTS(dom, proxy) {
     content.querySelectorAll('[src]').forEach(function(el) {
       el.src = PARSE_URL(el.src);
     });
-    if (proxy) {
+    if (proxy || !images) {
+      var removedImage, removedSmily;
+      if (!images) {
+        removedImage = dom.createElement('a');
+        removedImage.setAttribute('class', 'img-removed');
+        removedImage.innerHTML = 'Image removed';
+
+        removedSmily = dom.createElement('span');
+        removedImage.setAttribute('class', 'img-removed');
+        removedImage.innerHTML = 'Image removed';
+      }
       content.querySelectorAll('img').forEach(function(el) {
-        el.src = PROXY(el.src, proxy);
+        if (!images) {
+
+          if (el.classList.contains('emoji') && el.getAttribute('alt')) {
+            el.parentNode.replaceChild(dom.createTextNode(el.getAttribute('alt')), el);
+          } else {
+
+            var rmi = removedImage.cloneNode(true);
+            rmi.setAttribute('href', el.src);
+
+            if (el.classList.contains('emoji')) {
+              rmi.classList.add('emoji');
+            }
+            if (el.classList.contains('smilies')) {
+              rmi.classList.add('smilies');
+            }
+
+            var w = el.width, 
+                h = el.height;
+            if (w && !isNaN(w)) {
+              rmi.style.width = w + 'px';
+            }
+            if (h && !isNaN(h)) {
+              rmi.style.height = h + 'px';
+            }
+            el.parentNode.replaceChild(rmi, el);
+          }
+        } else if (proxy) {
+          el.src = PROXY(el.src, proxy);
+        }
       });
     }
 
@@ -446,7 +563,7 @@ async function EPUB_EXPORT(config) {
 
   epub_options.url = pages[0][0];
 
-  console.info('downloading and parsing page...', pages[0][0]);
+  console.info('extracting topic meta...', pages[0][0]);
   dom = pages[0][1];
 
   var topic_author = dom.querySelector('.post .username').innerHTML;
@@ -473,8 +590,10 @@ async function EPUB_EXPORT(config) {
       continue;
     }
     count++;
+
+    console.info('parsing page...', page[0]);
     
-    _posts = QUERY_POSTS(page[1], proxy);
+    _posts = QUERY_POSTS(page[1], proxy, epub_options.images);
 
     posts = posts.concat(_posts);
   }
@@ -485,7 +604,7 @@ async function EPUB_EXPORT(config) {
 
   var slug = epub_options.title.toLowerCase().replace(/[^a-z0-9\_\-]+/ig,'-').replace(/^-+/g,'').replace(/-+$/g,'').trim();
 
-  console.info('generating epub ebook...', slug + '.epub');
+  console.info('generating ebook...', slug + '.epub');
 
   new epubGen.default(epub_options, posts).then(
     function(content) {
@@ -497,8 +616,16 @@ async function EPUB_EXPORT(config) {
         
         saveAs(content, slug + '.epub');
 
+        // remove frames
+        document.querySelectorAll('.epub-frame').forEach(function(f) {
+          f.parentNode.removeChild(f);
+        });
+
     },
-    function(err){ console.error("Failed", err) }
+    function(err){
+      console.error("ebook generation failed", err);
+      console.info("\n   ℹ️ Failed to download images? Try the following:\n\n\t1. Verify the CORS proxy setting",{proxy: "https://api.codetabs.com/v1/proxy/?quest={{url}}"}," free proxy list:", "https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347","\n\t2. Disable images in ebook", {images: false},"\n\n");
+    }
   );
 
 }
