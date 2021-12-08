@@ -179,10 +179,17 @@ blockquote cite {
     display: block;
     font-size: 0.9em;
     margin-bottom: 5px;
+    clear: both;
+display: block;
 }
 blockquote cite > span {
     float: right;
     font-weight: normal;
+}
+blockquote cite::after {
+    content: '';
+    clear: both;
+    display: block;
 }
 .text-italics {
     font-style: italic;
