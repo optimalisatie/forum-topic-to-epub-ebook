@@ -597,7 +597,14 @@ async function EPUB_EXPORT(config) {
   var proxy = config.proxy || default_cors_proxy;
 
   // publisher
-  epub_options.publisher = config.publisher || document.querySelector('meta[property="og:site_name"]').getAttribute('content') + ' ('+document.location.hostname+')';
+  epub_options.publisher = config.publisher;
+  if (!epub_options.publisher) {
+    if (document.querySelector('meta[property="og:site_name"]')) {
+      epub_options.publisher = document.querySelector('meta[property="og:site_name"]').getAttribute('content') + ' ('+document.location.hostname+')'
+    } else {
+      epub_options.publisher = document.location.hostname;
+    }
+  }
 
   // topic title
   var topic_title = document.querySelector('.topic-title a');
@@ -625,8 +632,9 @@ async function EPUB_EXPORT(config) {
   container.style.marginTop = '2em';
   container.style.marginBottom = '2em';
   container.style.overflow = 'hidden';
+  container.style.background = 'white';
   
-  container.innerHTML = '<h1 style="padding: 0;margin: 0;"><span style="float:right;">🖨️</span>Printing topic to <code>.epub</code>...</h1><div class="dom-nodes"></div>';
+  container.innerHTML = '<h1 style="padding: 0;margin: 0;color:black;"><span style="float:right;">🖨️</span>Printing topic to <code style="color:black">.epub</code>...</h1><div class="dom-nodes"></div>';
   document.body.appendChild(container);
   var containerNodes = container.querySelector('.dom-nodes');
   container.scrollIntoView();
