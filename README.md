@@ -6,6 +6,7 @@ Tested on:
 
 - [forums.onlinebookclub.org](https://forums.onlinebookclub.org/)
 - [onlinephilosophyclub.com](https://onlinephilosophyclub.com/forums/index.php)
+- [forum.philosophynow.org](https://forum.philosophynow.org/)
 
 _(first version for PHPBB forums)_
 
