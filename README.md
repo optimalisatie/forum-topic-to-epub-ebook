@@ -27,7 +27,7 @@ Step 2: Copy the following browser widget code into the browser console (F12) to
 
 #### Browser button
 
-It is possible to create a browser bookmark button with the prefix `javascript:`. The button will create an ebook for the forum topic that is visible in the browser.
+It is possible to create a browser bookmark button with the prefix `javascript:`. The button will create an ebook for the forum topic that is visible in the browser. ([view instructions](#browser-ebook-print-button))
 
 ```text
 javascript:[...the above widget code here...]
