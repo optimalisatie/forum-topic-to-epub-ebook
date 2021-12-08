@@ -21,7 +21,7 @@ Step 2: Copy the following browser widget code into the browser console (F12) to
 (function(b,c,a,d){
    a=b.createElement("script");a.async=1;a.src="https://psyreporter.com/epub/epub.js";b.head.appendChild(a);d=setInterval(function(){window.epubExport&&(clearInterval(d),c&&window.epubExport(c),console.info("ebook epub export widget ready",window.epubExport))},10)
 })(document,{
-   /* options object */
+   /* options */
 });
 ```
 
@@ -85,7 +85,7 @@ javascript:[...the above widget code here...]
 Without passing an options object to the special browser widget code, the API `epubExport` can be used manually. It is also possible to load `epub.js` manually, for example for a custom forum integration.
 
 ```javascript
-window.epubExport({ /* options object */);
+window.epubExport({ /* options */);
 ```
 
 # Browser eBook Print button
@@ -104,7 +104,7 @@ Right-click on the browser bookmark bar and select "Create new bookmark".
 Copy the browser widget code above into the _Location:_ field prefixed with `javascript:`.
 
 ```text
-javascript:(function(b,c,a,d){a=b.createElement("script");a.async=1;a.src="https://psyreporter.com/epub/epub.js";b.head.appendChild(a);d=setInterval(function(){window.epubExport&&(clearInterval(d),c&&window.epubExport(c),console.info("ebook epub export widget ready",window.epubExport))},10)})(document,{/* options here */});
+javascript:(function(b,c,a,d){a=b.createElement("script");a.async=1;a.src="https://psyreporter.com/epub/epub.js";b.head.appendChild(a);d=setInterval(function(){window.epubExport&&(clearInterval(d),c&&window.epubExport(c),console.info("ebook epub export widget ready",window.epubExport))},10)})(document,{/* options */});
 ```
 
 #### Step 3
