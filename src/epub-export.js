@@ -71,7 +71,10 @@ chapterXHTML: `<?xml version="1.0" encoding="UTF-8"?>
 </body>
 </html>`,
   css: `
-
+pre{overflow: auto;} 
+dl, dd, pre {
+  margin:0
+}
   a.img-removed {
     display: inline-flex;
     align-items: center;
@@ -205,13 +208,82 @@ blockquote cite > span {
     border: none;
     text-decoration: underline;
 }
+dl.thumbnail dd {
+    color: #666666;
+    font-size:0.8em;
+    font-style: italic;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+div.inline-attachment dl.thumbnail, div.inline-attachment dl.file {
+    display: block;
+    margin-bottom: 4px;
+}
+.codebox {
+    border: 1px solid #C9D2D8;
+    font-size: 1em;
+    margin: 1em 0 1.2em 0;
+    word-wrap: normal;
+}
+.codebox p {
+    text-transform: uppercase;
+    border-bottom: 1px solid #CCCCCC;
+    padding: 7px;
+    font-size: 0.8em !important;
+    font-weight: bold;
+    display: block;
+        margin: 0px;
+    background-color: #efefef;
+}
+.codebox pre {
+  padding: 7px;
+  padding-right:0;
+}
+
+a.iframe {
+  display: flex;
+    padding: 1em;
+    border: inset 2px;
+    justify-content: center;
+    align-items: center;
+    color:#666;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+a.iframe span {
+  color:#000;
+}
+a.youtube {
+   display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    color: #666;
+}
+a.youtube img {
+    border: inset 2px;
+}
+a.youtube span {
+  display:block;
+  padding:7px;
+  font-size:0.8em;
+}
+
   `
 };
 
 function PROXY(url, proxy) {
+
+  var parsed = PARSE_URL(url, true);
+
+  // do not proxify local urls
+  if (parsed.hostname === LOCATIONHOST) {
+    return parsed.href;
+  }
+
   return proxy
-    .replace('{{url}}', url)
-    .replace('{{url_escaped}}', escape(url));
+    .replace('{{url}}', parsed.href)
+    .replace('{{url_escaped}}', escape(parsed.href));
 }
 
 function ERROR(err, alert_msg) {
@@ -347,11 +419,15 @@ async function LOAD_PAGE(url, containerNodes) {
 }
 
 var A = document.createElement('a');
-function PARSE_URL(url) {
+function PARSE_URL(url, full) {
   var link = A.cloneNode(true);
   link.href = url;
+  if (full) {
+    return link;
+  }
   return link.href;
 }
+var LOCATIONHOST = PARSE_URL(document.location.href, true).hostname;
 
 function QUERY_POSTS(dom, proxy, images) {
 
@@ -376,7 +452,7 @@ function QUERY_POSTS(dom, proxy, images) {
     content.querySelectorAll('[src]').forEach(function(el) {
       el.src = PARSE_URL(el.src);
     });
-    
+
     var removedImage = dom.createElement('a');
         removedImage.setAttribute('class', 'img-removed');
         removedImage.innerHTML = 'Image removed';
@@ -410,6 +486,54 @@ function QUERY_POSTS(dom, proxy, images) {
 
       } else if (proxy) {
         el.src = PROXY(el.src, proxy);
+      }
+    });
+
+    // iframes
+    var youtube = /youtube\.[a-z\.]+\/embed\/([^\?&]+)((\?|&).*)?$/;
+    content.querySelectorAll('iframe').forEach(function(el) {
+      var src = PARSE_URL(el.src);
+
+      var m = src.match(youtube);
+      if (m) {
+        var ytimg = document.createElement('img');
+        ytimg.src = PROXY('https://img.youtube.com/vi/'+m[1]+'/maxresdefault.jpg', proxy);
+        ytimg.alt = 'YouTube: ' + m[1];
+        if (el.width) {
+          ytimg.style.width = el.width + 'px';
+          ytimg.width = el.width;
+        }
+        if (el.height) {
+          ytimg.style.height = el.height + 'px';
+          ytimg.height = el.height;
+        }
+        var ytlink = A.cloneNode(true);
+        ytlink.classList.add('youtube');
+        ytlink.href = 'https://www.youtube.com/watch?v=' + m[1];
+        if (el.width) {
+          ytlink.style.width = el.width + 'px';
+        }
+        ytlink.appendChild(ytimg);
+
+        var txt = document.createElement('span');
+        txt.innerHTML = 'YouTube: ' + m[1];
+        ytlink.appendChild(txt);
+
+        el.parentNode.replaceChild(ytlink, el);
+      } else {
+
+        // other iframes
+        var ilink = A.cloneNode(true);
+        ilink.href = src;
+        ilink.classList.add('iframe');
+        ilink.innerHTML = '&lt;iframe&gt;: ' + src;
+        if (el.width) {
+          ilink.style.width = el.width + 'px';
+        }
+        if (el.height) {
+          ilink.style.height = el.height + 'px';
+        }
+        el.parentNode.replaceChild(ilink, el);
       }
     });
 
@@ -631,23 +755,19 @@ async function EPUB_EXPORT(config) {
     function(content) {
 
       if (audio) {
-        audio.pause();
+      audio.pause();
       }
 
       console.log('epub ebook generated', slug + '.epub', content);
 
-        /*var blob = new Blob([content], {
-            type: "application/epub+zip"
-        });*/
-        
-        saveAs(content, slug + '.epub');
+      saveAs(content, slug + '.epub');
 
-        // remove frames
-        document.querySelectorAll('.epub-frame').forEach(function(f) {
-          f.parentNode.removeChild(f);
-        });
+      // remove frames
+      document.querySelectorAll('.epub-frame').forEach(function(f) {
+      f.parentNode.removeChild(f);
+      });
 
-        container.parentNode.removeChild(container);
+      container.parentNode.removeChild(container);
 
     },
     function(err){
