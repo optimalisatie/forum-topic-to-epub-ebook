@@ -124,9 +124,9 @@ A [discussion topic](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&
 
 A demo ebook is available in this repository.
 
-**On the absurd hegemony of science**  
-_A book without an end... One of the most popular philosophy discussion topics in recent history._  
-[on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
+> **On the absurd hegemony of science**  
+> _A book without an end... One of the most popular philosophy discussion topics in recent history._  
+> [on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
 
 Poetry book review: [official-review-in-the-land-of-myth-by-bernard-kuckuck.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/official-review-in-the-land-of-myth-by-bernard-kuckuck.epub?raw=true)
 
