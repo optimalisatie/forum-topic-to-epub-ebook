@@ -104,7 +104,7 @@ Step 2: When you want to save a topic to ebook, you can simply click the button 
 
 # 📖 Ebook demo
 
-The discussion topic [On the absurd hegemony of science](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848) with over 1000 posts was printed into an ebook in several seconds, including all images embedded.
+A [discussion topic](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&t=16848) with over 1000 posts was printed into an ebook in several seconds, including all images embedded.
 
 ![On the absurd hegemony of science - An ebook by [USERNAME]](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/example-ebook.png?raw=true)
 
@@ -112,7 +112,9 @@ The discussion topic [On the absurd hegemony of science](https://onlinephilosoph
 
 A demo `.epub` ebook is available in this repository.
 
-Forum discussion: [on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
+**On the absurd hegemony of science**  
+_A book without an end... One of the most popular philosophy discussion topics in recent history._  
+[on-the-absurd-hegemony-of-science.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/on-the-absurd-hegemony-of-science.epub?raw=true)
 
 Poetry book review: [official-review-in-the-land-of-myth-by-bernard-kuckuck.epub](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/official-review-in-the-land-of-myth-by-bernard-kuckuck.epub?raw=true)
 
