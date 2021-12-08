@@ -122,7 +122,7 @@ A [discussion topic](https://onlinephilosophyclub.com/forums/viewtopic.php?f=12&
 
 ### Download ebook
 
-A demo `.epub` ebook is available in this repository.
+A demo ebook is available in this repository.
 
 **On the absurd hegemony of science**  
 _A book without an end... One of the most popular philosophy discussion topics in recent history._  
