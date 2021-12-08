@@ -92,18 +92,24 @@ window.epubExport({ /* options object */);
 
 You can create a browser button to print a topic with a single click.
 
-Step 1: Right-click on the browser bookmark bar and select "Create new bookmark".
+#### Step 1
+
+Right-click on the browser bookmark bar and select "Create new bookmark".
 
 ![Create bookmark](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/create-bookmark.png?raw=true)
 
 
-Step 2: Copy the browser widget code above into the Location: field prefixed with `javascript:`.
+#### Step 2
+
+Copy the browser widget code above into the _Location:_ field prefixed with `javascript:`.
 
 ```text
 javascript:(function(b,c,a,d){a=b.createElement("script");a.async=1;a.src="https://psyreporter.com/epub/epub.js";b.head.appendChild(a);d=setInterval(function(){window.epubExport&&(clearInterval(d),c&&window.epubExport(c),console.info("ebook epub export widget ready",window.epubExport))},10)})(document,{/* options here */});
 ```
 
-Step 3: When you want to save a topic to ebook, you can simply click the button in the browser and within seconds the ebook is printed.
+#### Step 3
+
+When you want to save a topic to ebook, you can simply click the button in the browser and within seconds the ebook is printed.
 
 
 ![Print eBook](https://github.com/optimalisatie/forum-topic-to-epub-ebook/blob/main/print-ebook-button.png?raw=true)
