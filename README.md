@@ -88,7 +88,7 @@ Without passing an options object to the special browser widget code, the API `e
 window.epubExport({ /* options */);
 ```
 
-# Browser eBook Print button
+## Browser eBook Print button
 
 You can create a browser button to print a topic with a single click.
 
