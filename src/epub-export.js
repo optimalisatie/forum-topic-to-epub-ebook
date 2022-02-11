@@ -463,9 +463,9 @@ function QUERY_POSTS(dom, proxy, images) {
     var post = {};
 
     post.author = el.querySelector('.username,.username-coloured').innerHTML;
-    post.avatar = el.querySelector('.avatar');
+    post.avatar = el.querySelector('img.avatar');
     if (post.avatar) {
-      post.avatar = post.avatar.src;
+      post.avatar = PROXY(post.avatar.src, proxy);
     }
     post.date = new Date(el.querySelector('time[datetime]').getAttribute('datetime')).toUTCString().replace(/^[^,]+,\s*([^:]+[0-9]{2}:[0-9]{2}).*$/,'$1');
     post.url = el.querySelector('.author > a > span').parentElement.href;
