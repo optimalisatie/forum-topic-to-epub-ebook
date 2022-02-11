@@ -57,12 +57,17 @@ chapterXHTML: `<?xml version="1.0" encoding="UTF-8"?>
 <body>
   <% if (prependChapterTitles) { %>
     <h1 class="epub-head"><%= title %></h1>
+    <% if (avatar) { %>
+      <p class="epub-avatar"><img src="<%= avatar %>"></p>
+    <% } %>
+    <p class="epub-subhead">
     <% if (date) { %>
-      <p class="epub-date"><%= date %></p>
+      <span class="epub-date"><%= date %></span>
     <% } %>
     <% if (author.length) { %>
-      <p class="epub-author"><%= author.join(', ') %></p>
+      <span class="epub-author"><%= author.join(', ') %></span>
     <% } %>
+    </p>
     <% if (url) { %>
       <p class="epub-link"><a href="<%= url %>"><%= url %></a></p>
     <% } %>
@@ -110,6 +115,19 @@ dl, dd, pre {
 }
 .epub-head {
   font-size: 1.2em;
+}
+.epub-subhead {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.epub-avatar {
+  padding:0;
+  margin:0;
+}
+.epub-avatar img { 
+  height:100px;
+  width:auto;
 }
 .epub-date {
     float: right;
@@ -445,6 +463,10 @@ function QUERY_POSTS(dom, proxy, images) {
     var post = {};
 
     post.author = el.querySelector('.username,.username-coloured').innerHTML;
+    post.avatar = el.querySelector('.avatar');
+    if (post.avatar) {
+      post.avatar = post.avatar.src;
+    }
     post.date = new Date(el.querySelector('time[datetime]').getAttribute('datetime')).toUTCString().replace(/^[^,]+,\s*([^:]+[0-9]{2}:[0-9]{2}).*$/,'$1');
     post.url = el.querySelector('.author > a > span').parentElement.href;
     
