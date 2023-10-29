@@ -748,7 +748,7 @@ async function EPUB_EXPORT(config) {
   console.info('extracting topic meta...', pages[0][0]);
   dom = pages[0][1];
 
-  var topic_author = dom.querySelector('.post .username').innerHTML;
+  var topic_author = dom.querySelector('.post .username,.post .username-coloured').innerHTML;
   var topic_date = new Date(dom.querySelector('.post time[datetime]').getAttribute('datetime'));
 
   epub_options.author = topic_author;
